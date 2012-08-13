@@ -5,7 +5,7 @@ module AquaductCrawler
       def initialize(sample_row)
         begin
           # datetimes like "08/31/12 12:28:52 PM"
-          @sampled_at = DateTime.strptime(sample_row.children[0].inner_text.strip, "%m/%d/%y %I:%M:%S %p")
+          @sampled_at = Time.strptime(sample_row.children[0].inner_text.strip, "%m/%d/%y %I:%M:%S %p")
           @value = sample_row.children[1].inner_text.strip.to_f
         rescue
           require 'ruby-debug'; debugger

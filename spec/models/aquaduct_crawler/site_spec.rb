@@ -27,11 +27,11 @@ module AquaductCrawler
       subject { parse.samples }
       its(:size) { should == 5 }
       it { should == [
-        Sample.new(:sampled_at => DateTime.parse("Aug 6, 2012 7:44:24 PM"), :value => 0.0, :site_id => "fake_station_id"),
-        Sample.new(:sampled_at => DateTime.parse("Aug 6, 2012 6:44:24 PM"), :value => 1.0, :site_id => "fake_station_id"),
-        Sample.new(:sampled_at => DateTime.parse("Aug 6, 2012 5:44:24 PM"), :value => 2.0, :site_id => "fake_station_id"),
-        Sample.new(:sampled_at => DateTime.parse("Aug 6, 2012 4:44:24 PM"), :value => 3.0, :site_id => "fake_station_id"),
-        Sample.new(:sampled_at => DateTime.parse("Aug 6, 2012 3:44:24 PM"), :value => 4.0, :site_id => "fake_station_id")
+        Sample.new(:sampled_at => Time.parse("Aug 6, 2012 7:44:24 PM"), :value => 0.0, :site_id => "fake_station_id"),
+        Sample.new(:sampled_at => Time.parse("Aug 6, 2012 6:44:24 PM"), :value => 1.0, :site_id => "fake_station_id"),
+        Sample.new(:sampled_at => Time.parse("Aug 6, 2012 5:44:24 PM"), :value => 2.0, :site_id => "fake_station_id"),
+        Sample.new(:sampled_at => Time.parse("Aug 6, 2012 4:44:24 PM"), :value => 3.0, :site_id => "fake_station_id"),
+        Sample.new(:sampled_at => Time.parse("Aug 6, 2012 3:44:24 PM"), :value => 4.0, :site_id => "fake_station_id")
       ]}
     end
 
