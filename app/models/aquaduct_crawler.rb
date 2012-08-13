@@ -10,21 +10,33 @@ module AquaductCrawler
     @logger ||= Logger.new(STDOUT)
   end
 
-  def self.site_file_names
-    response = Net::HTTP.get(HOST, BASE_PATH)
-    body = Nokogiri::HTML(response)
-    body.search('pre a').select { |l| l.inner_text.match /^[0-9]+\.htm$/ }.map &:inner_text
+  def self.site_parses
+    @site_parses ||= sites_to_crawl.map do |site_file_name|
+      Site::Parse.new(site_file_name)
+    end
   end
 
-  def self.sites
-    @sites ||= sites_to_crawl.map do |site_file_name|
-      Site.new(site_file_name)
-    end
+  def self.site_file_names
+    # get apache file listing
+    response = Net::HTTP.get(HOST, BASE_PATH)
+    body = Nokogiri::HTML(response)
+    #Find all files like 1237.htm, they represent sensor pages
+    body.search('pre a').select { |l| l.inner_text.match /^[0-9]+\.htm$/ }.map &:inner_text
   end
 
   #exclude sites with wonky data
   def self.sites_to_crawl
     site_file_names - WONKY_SITE_PAGES
+  end
+
+  def self.update_samples
+    site_parses.each do |site_parse|
+      logger.debug("parsing site id: #{site_parse.id}")
+      site = Site.find_or_create_by_id(site_parse.to_hash)
+      site_parse.samples.each do |sample|
+        Sample.find_or_create_by_sampled_at_and_site_id(sample.attributes)
+      end
+    end
   end
 
   FLOW = "Flow"
@@ -64,14 +76,10 @@ module AquaductCrawler
     '32240.htm'
   ]
 
-  # some sites don't have a type specified.
+  # some sites don't have a measurement_type specified.
   # Here's my best guess as to what they are. (based on magnitude of value)
   SITE_TO_MEASUREMENT_MAP = {
     "00760" => FLOW,
   }
 end
 
-__END__
-
-load 'lib/aquaduct_crawler.rb'
-AquaductCrawler.sites.map &:measurements
