@@ -4,6 +4,8 @@ module AquaductCrawler
   class Site < ActiveRecord::Base
     attr_accessible :id, :site_name, :measurement_type
 
+    has_many :samples
+
     class Parse
       attr :body, :id, :site_name, :measurement_type
 
