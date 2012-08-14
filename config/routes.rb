@@ -1,7 +1,7 @@
 Aquaduct::Application.routes.draw do
 
-  get 'sites(.:format)' => 'sites#index'
-  get 'sites/:id(.:format)' => 'sites#show'
+  get 'sites(.:format)' => 'sites#index', :as => 'sites'
+  get 'sites/:id(.:format)' => 'sites#show', :as => 'site'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -52,7 +52,7 @@ Aquaduct::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'static#home'
 
   # See how all your routes lay out with "rake routes"
 

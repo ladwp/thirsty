@@ -3,10 +3,9 @@
     "use strict";
     var data = site.samples;
 
-    var margin = 40,
+    var margin = 60,
       width = 700 - margin,
-      height = 300 - margin;
-
+      height = 500 - margin;
 
     d3.select(".plot").
       append("h2").
@@ -23,10 +22,32 @@
       selectAll("circle").
       data(data).
       enter().
-      append("circle");
+      append("circle").
+        attr("class", function(sample) { return sample.value == 0 ? "zero" : "non-zero" });
 
+    var non_zero_value_samples =  _.reject(data, function(sample) { return sample.value == 0 });
     var value_extent = d3.extent(
+      non_zero_value_samples,
+      function(sample) { return sample.value; }
+    );
+
+    var value_scale = d3.scale.linear().
+      domain(value_extent).
+      range([height, margin]);
+
+    var time_extent = d3.extent(
       data,
+      function(sample) { return Date.parse(sample.sampled_at); }
+    );
+
+    var time_scale = d3.time.scale().
+      domain(time_extent).
+      range([margin, width]);
+
+
+    var non_zero_value_samples =  _.reject(data, function(sample) { return sample.value == 0 });
+    var value_extent = d3.extent(
+      non_zero_value_samples,
       function(sample) { return sample.value; }
     );
 
@@ -45,7 +66,7 @@
 
     d3.selectAll("circle").
       attr("cx", function(sample) { return time_scale(Date.parse(sample.sampled_at)); }).
-      attr("cy", function(sample) { return value_scale(sample.value); }).
+      attr("cy", function(sample) { return sample.value == 0.0 ? height : value_scale(sample.value); }).
       attr("r", 3);
 
     var time_axis = d3.svg.axis().
@@ -88,6 +109,9 @@
     stroke-width: 0.5px;
     fill: RoyalBlue;
     opacity: 0.6;
+  }
+  circle.zero {
+    fill: Red;
   }
 </style>
 <div class='plot'>

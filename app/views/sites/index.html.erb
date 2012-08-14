@@ -3,9 +3,9 @@
     "use strict";
     var data = site.samples;
 
-    var margin = 40,
+    var margin = 60,
       width = 700 - margin,
-      height = 300 - margin;
+      height = 500 - margin;
 
 
     d3.select(".plot").
@@ -27,10 +27,12 @@
       selectAll("circle").
       data(data).
       enter().
-      append("circle");
+      append("circle").
+        attr("class", function(sample) { return sample.value == 0 ? "zero" : "non-zero" });
 
+    var non_zero_value_samples =  _.reject(data, function(sample) { return sample.value == 0 });
     var value_extent = d3.extent(
-      data,
+      non_zero_value_samples,
       function(sample) { return sample.value; }
     );
 
@@ -49,7 +51,7 @@
 
     plot.selectAll("circle").
       attr("cx", function(sample) { return time_scale(Date.parse(sample.sampled_at)); }).
-      attr("cy", function(sample) { return value_scale(sample.value); }).
+      attr("cy", function(sample) { return sample.value == 0.0 ? height : value_scale(sample.value); }).
       attr("r", 3);
 
     var time_axis = d3.svg.axis().
@@ -96,6 +98,9 @@
     stroke-width: 0.5px;
     fill: RoyalBlue;
     opacity: 0.6;
+  }
+  circle.zero {
+    fill: Red;
   }
 </style>
 <div class='plot'>

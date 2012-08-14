@@ -8,7 +8,30 @@
 </head>
 <body>
 
-<%= yield %>
-
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/">Thirsty</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><a href="/sites">Examples</a></li>
+          <li><a href="mailto:michael@jackpine.me">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<div class="container">
+  <%= yield %>
+  <hr />
+  <footer>
+    <a href="mailto:michael@jackpine.me">contact me</a> with questions or leads on LADWP data feeds. <a href="https://twitter.com/#!/search/?q=%23opendata">#opendata</a>
+  </footer>
+</div>
 </body>
 </html>

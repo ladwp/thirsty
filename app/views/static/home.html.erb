@@ -1,0 +1,67 @@
+<h1>Thirsty, Los Angeles?</h1>
+<p id="intro">
+  This is an API around some realtime <a href="www.ladwp.com">LADWP</a> measurements.
+  It was harvested by dubious means, and the data set isn't very clean.
+  There are <%=  link_to 'some plots', sites_path %> so you can get an idea of the available data.
+</p>
+
+<p>
+  Do you have access to more LADWP data? I'd love to compile it here.
+  Please <a href="twitter.com/ikawe">let me know</a>!
+</p>
+  
+
+<h2>Api</h2>
+<div class="method">
+  <strong>GET /sites.json</strong>
+  <pre>curl -X GET aquaduct.herokuapp.com/sites.json</pre>
+  <p>Get list of available sites</p>
+  <pre class="prettyprint"><code>[
+    {
+        "created_at": "2012-08-13T14:09:41-07:00", 
+        "id": 490, 
+        "measurement_type": "Flow", 
+        "site_name": "LAA at Alabama", 
+        "updated_at": "2012-08-13T14:09:41-07:00"
+    }, 
+    {
+        "created_at": "2012-08-13T14:09:42-07:00", 
+        "id": 4922, 
+        "measurement_type": "Level", 
+        "site_name": "LAA at Alabama", 
+        "updated_at": "2012-08-13T14:09:42-07:00"
+    },
+    ...
+]</code></pre>
+</div>
+
+<div class="method">
+  <strong>GET /sites/<id>.json</strong>
+  <pre>curl -X GET aquaduct.herokuapp.com/sites/490.json</pre>
+  <p>Get the list of samples for the given site</p>
+  <pre class="prettyprint"><code>{
+    "created_at": "2012-08-13T14:09:41-07:00", 
+    "id": 490, 
+    "measurement_type": "Flow", 
+    "samples": [
+        {
+            "created_at": "2012-08-13T14:09:41-07:00", 
+            "id": 121, 
+            "sampled_at": "2012-08-13T06:44:16-07:00", 
+            "site_id": 490, 
+            "updated_at": "2012-08-13T14:09:41-07:00", 
+            "value": 478.0
+        }, 
+        {
+            "created_at": "2012-08-13T14:09:41-07:00", 
+            "id": 122, 
+            "sampled_at": "2012-08-13T06:29:15-07:00", 
+            "site_id": 490, 
+            "updated_at": "2012-08-13T14:09:41-07:00", 
+            "value": 478.0
+        }, 
+        ...
+    ]
+}</code></pre>
+</div>
+
