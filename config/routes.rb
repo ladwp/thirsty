@@ -1,7 +1,7 @@
 Aquaduct::Application.routes.draw do
 
-  get 'sites.json' => 'sites#index'
-  get 'sites/:id.json' => 'sites#show'
+  get 'sites.:format' => 'sites#index'
+  get 'sites/:id.:format' => 'sites#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

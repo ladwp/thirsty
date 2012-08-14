@@ -1,0 +1,95 @@
+<script src="http://d3js.org/d3.v2.js"></script>
+<script>
+  function draw(site) {
+    "use strict";
+    var data = site.samples;
+
+    var margin = 40,
+      width = 700 - margin,
+      height = 300 - margin;
+
+
+    d3.select(".plot").
+      append("h2").
+        text(site.site_name + " : " + site.measurement_type);
+
+    d3.select(".plot").
+      append("svg").
+        attr("width", width).
+        attr("height", height).
+      append("g").
+        attr("class", "chart");
+
+    d3.select("svg").
+      selectAll("circle").
+      data(data).
+      enter().
+      append("circle");
+
+    var value_extent = d3.extent(
+      data,
+      function(sample) { return sample.value; }
+    );
+
+    var value_scale = d3.scale.linear().
+      domain(value_extent).
+      range([height, margin]);
+
+    var time_extent = d3.extent(
+      data,
+      function(sample) { return Date.parse(sample.sampled_at); }
+    );
+
+    var time_scale = d3.time.scale().
+      domain(time_extent).
+      range([margin, width]);
+
+    d3.selectAll("circle").
+      attr("cx", function(sample) { return time_scale(Date.parse(sample.sampled_at)); }).
+      attr("cy", function(sample) { return value_scale(sample.value); }).
+      attr("r", 3);
+
+    var time_axis = d3.svg.axis().
+      scale(time_scale);
+
+    d3.select('svg').
+      append('g').
+      attr("class", "x axis").
+      attr("transform", "translate(0, " + height + ")").
+      call(time_axis);
+
+    var value_axis = d3.svg.axis().
+      scale(value_scale).
+      orient("left");
+
+    d3.select("svg").
+      append('g').
+      attr("class", "y axis").
+      attr("transform", "translate(" + margin + ")").
+      call(value_axis);
+
+  }
+
+  d3.json("/sites/<%= @site.id %>.json", draw);
+</script>
+<style type="text/css">
+  svg {
+    padding-bottom: 50px;
+  }
+  .axis path, .tick {
+    fill: none;
+    stroke: black;
+  }
+  .axis {
+    font-size: 8pt;
+    font-family: sans-serif;
+  }
+  circle {
+    stroke: black;
+    stroke-width: 0.5px;
+    fill: RoyalBlue;
+    opacity: 0.6;
+  }
+</style>
+<div class='plot'>
+</div>
