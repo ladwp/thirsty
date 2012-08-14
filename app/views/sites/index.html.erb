@@ -10,6 +10,8 @@
 
     d3.select(".plot").
       append("h2").
+      append("a").
+        attr("href", "/sites/" + site.id).
         text(site.site_name + " : " + site.measurement_type);
 
     var plot = d3.select(".plot").
