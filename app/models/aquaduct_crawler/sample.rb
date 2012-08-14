@@ -1,5 +1,15 @@
 module AquaductCrawler
   class Sample < ActiveRecord::Base
+    # ladwp stores last 5 days of sample data
+    # Today's samples are stored in 15 minute increments,
+    # the previous four days are stored in one hour increments
+    #
+    # Also, it seems like there is a gap in the readings "this morning"
+    # 08/13/12 11:29:16 AM	 5.7
+    # 08/13/12 11:14:16 AM	 5.7
+    # 8/12/12 11:44:16 PM	 5.0
+    # 8/12/12 10:44:16 PM	 5.0
+    # 8/12/12 9:44:16 PM	 5.0
     class Parse
       attr :sampled_at, :value
       def initialize(sample_row)
