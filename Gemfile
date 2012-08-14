@@ -9,6 +9,8 @@ gem 'pg'
 gem 'nokogiri'
 gem 'underscore-rails'
 gem 'd3-rails'
+gem 'newrelic_rpm'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
