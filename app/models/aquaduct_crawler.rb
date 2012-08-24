@@ -12,7 +12,7 @@ module AquaductCrawler
 
   def self.site_parses
     @site_parses ||= sites_to_crawl.map do |site_file_name|
-      Site::Parse.new(site_file_name)
+      SiteParse.new(site_file_name)
     end
   end
 
@@ -33,7 +33,10 @@ module AquaductCrawler
     site_parses.each do |site_parse|
       logger.debug("parsing site id: #{site_parse.id}")
       site = Site.find_or_create_by_id(site_parse.to_hash)
-      site_parse.samples.each do |sample|
+      site_parse.sample_parses.map do |sample_parse|
+        sample_attributes = sample_parse.to_hash.merge({ :site_id => site.id })
+        Sample.new(sample_attributes)
+      end.each do |sample|
         Sample.find_or_create_by_sampled_at_and_site_id(sample.attributes)
       end
     end
