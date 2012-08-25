@@ -5,6 +5,9 @@ describe SitesController do
     it "shouldn't explode" do
       get :index
     end
+    it "should support json" do
+      get :index, :format => :json
+    end
   end
   describe "#show" do
     it "shouldn't explode" do
