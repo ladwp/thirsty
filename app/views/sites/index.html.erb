@@ -3,6 +3,7 @@
     <th>Type</th>
     <th>Site</th>
     <th>Format</th>
+    <th>Last sampled</th>
   </tr>
   <% @sites.each do |site| %>
     <tr>
@@ -14,6 +15,9 @@
       </td>
       <td>
         [ <%= link_to 'plot', site %>, <%= link_to 'json', site_path(site, :format => :json) %> ]
+      </td>
+      <td>
+        <%= usable_time site.last_sampled_at %>
       </td>
     </tr>
   <% end %>

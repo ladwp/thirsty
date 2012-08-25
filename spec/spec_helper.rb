@@ -47,4 +47,7 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+
+  #https://github.com/thoughtbot/factory_girl/issues/55
+  FactoryGirl.reload
 end

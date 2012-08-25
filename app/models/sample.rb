@@ -1,6 +1,8 @@
 class Sample < ActiveRecord::Base
   attr_accessible :id, :created_at, :updated_at, :site_id, :value, :sampled_at
 
+  validates_presence_of :value, :sampled_at, :site
+
   belongs_to :site
 
   delegate :measurement_type, :to => :site
