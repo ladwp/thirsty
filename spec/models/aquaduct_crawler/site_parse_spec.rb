@@ -34,14 +34,17 @@ module AquaductCrawler
           Time.parse("Aug 6, 2012 4:44:24 PM PDT"),
           Time.parse("Aug 6, 2012 3:44:24 PM PDT"),
         ]}
+      it {
+        (subject.map &:value).should == [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ]
+      }
     end
 
   end
 end
 
-__END__
- :value => 0.0, :site_id => "fake_station_id"),
- :value => 1.0, :site_id => "fake_station_id"),
- :value => 2.0, :site_id => "fake_station_id"),
- :value => 3.0, :site_id => "fake_station_id"),
- :value => 4.0, :site_id => "fake_station_id")
