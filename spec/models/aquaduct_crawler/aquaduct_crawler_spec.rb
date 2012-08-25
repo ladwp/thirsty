@@ -25,7 +25,8 @@ module AquaductCrawler
 
     context "when some samples already exist" do
       it "should only add new samples" do
-        Sample.create!(:sampled_at => Time.parse("Aug 6, 2012 7:44:24 PM PDT"), :value => 0.0, :site_id => site_id)
+        site = FactoryGirl.create(:site, :id => site_id)
+        FactoryGirl.create(:sample, :sampled_at => Time.parse("Aug 6, 2012 7:44:24 PM PDT"), :value => 0.0, :site => site)
         Sample.count.should == 1
 
         AquaductCrawler.update_samples

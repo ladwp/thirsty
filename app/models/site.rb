@@ -5,6 +5,8 @@ class Site < ActiveRecord::Base
 
   has_many :samples
 
+  validates_presence_of :site_name, :measurement_type
+
 end
 
 

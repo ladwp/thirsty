@@ -28,6 +28,7 @@ group :test do
   gem 'spork'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'factory_girl_rails'
 end
 
 gem 'debugger'
