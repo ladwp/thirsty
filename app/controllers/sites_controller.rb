@@ -1,6 +1,6 @@
 class SitesController < ApplicationController
   def index
-    @sites = AquaductCrawler::Site.all
+    @sites = Site.all(:order => :measurement_type)
     respond_to do |format|
       format.html
       format.json { render :json => @sites }
@@ -8,7 +8,7 @@ class SitesController < ApplicationController
   end
 
   def show
-    @site = AquaductCrawler::Site.find(params[:id])
+    @site = Site.find(params[:id])
     respond_to do |format|
       format.html
       format.json { render :json => @site.as_json(:include => :samples) }

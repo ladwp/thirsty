@@ -1,15 +1,21 @@
 <h1>Thirsty, Los Angeles?</h1>
 <p id="intro">
-  This is an API around some realtime <a href="www.ladwp.com">LADWP</a> water sensors in the Owens Valley.
-  There are <%=  link_to 'some plots', sites_path %> so you can get an idea of the available data.
-  It was harvested by dubious means, and the data set isn't very clean.
+  This is an API around some realtime <a href="www.ladwp.com">LADWP</a> water
+  sensors in the Owens Valley.  The data is being scraped from a perhaps
+  abandoned website which seems to have come out of one of the 
+  <%= link_to 'LADWP/Owens Valley settlements', 'http://en.wikipedia.org/wiki/California_Water_Wars' %>.
+</p>
+
+<p>
+  There are <%=  link_to 'several sensor sites', sites_path %> available and an 
+  <%= link_to 'example plot', site_path(:id => '332625') %>, so you can get an 
+  idea of the available data.
 </p>
 
 <p>
   Do you have access to more LADWP data? I'd love to compile it here.
   Please <a href="twitter.com/jackpinescience">let me know</a>!
 </p>
-  
 
 <h2>Api</h2>
 <div class="method">
