@@ -1,15 +1,10 @@
 <script>
-  function draw(site) {
+  function draw(samples) {
     "use strict";
-    var data = site.samples;
 
     var margin = 60,
       width = 700 - margin,
       height = 500 - margin;
-
-    d3.select(".plot").
-      append("h2").
-        text(site.site_name + " : " + site.measurement_type);
 
     d3.select(".plot").
       append("svg").
@@ -20,12 +15,12 @@
 
     d3.select("svg").
       selectAll("circle").
-      data(data).
+      data(samples).
       enter().
       append("circle").
         attr("class", function(sample) { return sample.value == 0 ? "zero" : "non-zero" });
 
-    var non_zero_value_samples =  _.reject(data, function(sample) { return sample.value == 0 });
+    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.value == 0 });
     var value_extent = d3.extent(
       non_zero_value_samples,
       function(sample) { return sample.value; }
@@ -36,7 +31,7 @@
       range([height, margin]);
 
     var time_extent = d3.extent(
-      data,
+      samples,
       function(sample) { return Date.parse(sample.sampled_at); }
     );
 
@@ -45,7 +40,7 @@
       range([margin, width]);
 
 
-    var non_zero_value_samples =  _.reject(data, function(sample) { return sample.value == 0 });
+    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.value == 0 });
     var value_extent = d3.extent(
       non_zero_value_samples,
       function(sample) { return sample.value; }
@@ -56,7 +51,7 @@
       range([height, margin]);
 
     var time_extent = d3.extent(
-      data,
+      samples,
       function(sample) { return Date.parse(sample.sampled_at); }
     );
 
@@ -90,7 +85,7 @@
 
   }
 
-  d3.json("/sites/<%= @site.id %>.json", draw);
+  d3.json("/sites/<%= @site.id %>/samples.json", draw);
 </script>
 <style type="text/css">
   svg {
@@ -114,5 +109,6 @@
     fill: Red;
   }
 </style>
+<h2><%= @site.site_name %> : <%= @site.measurement_type %></h2>
 <div class='plot'>
 </div>

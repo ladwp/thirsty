@@ -2,6 +2,7 @@ Aquaduct::Application.routes.draw do
 
   get 'sites(.:format)' => 'sites#index', :as => 'sites'
   get 'sites/:id(.:format)' => 'sites#show', :as => 'site'
+  get 'sites/:site_id/samples(.:format)' => 'site_samples#index', :as => 'site_samples'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

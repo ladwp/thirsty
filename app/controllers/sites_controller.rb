@@ -11,7 +11,7 @@ class SitesController < ApplicationController
     @site = Site.find(params[:id])
     respond_to do |format|
       format.html
-      format.json { render :json => @site.as_json(:include => :samples) }
+      format.json { render :json => @site }
     end
   end
 end
