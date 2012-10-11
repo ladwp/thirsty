@@ -4,6 +4,9 @@ Aquaduct::Application.routes.draw do
   get 'sites/:id(.:format)' => 'sites#show', :as => 'site'
   get 'sites/:site_id/samples(.:format)' => 'site_samples#index', :as => 'site_samples'
 
+  mount JasmineRails::Engine => "/specs" unless Rails.env.production?
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
