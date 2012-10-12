@@ -26,8 +26,8 @@ group :test do
   gem 'rspec-rails'
   gem 'webmock'
   gem 'spork'
-  gem 'guard'
   gem 'guard-rspec'
+  gem 'rb-inotify'
   gem 'factory_girl_rails'
 end
 
