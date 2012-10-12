@@ -1,17 +1,40 @@
-var SensorPlot = Backbone.Model.extend({
+var SensorSample = Backbone.Model.extend({});
 
-  initialize: function(site_id) { 
-    this.site_id = site_id;
-    
+var SensorSite = Backbone.Collection.extend({
+
+  model: SensorSample,
+
+  initialize: function(opts){
+    this.site_id = opts.site_id;
     var now = new Date(Date.now());
     this.sampled_after = new Date(now.setMonth(now.getMonth() - 1));
     this.sampled_before = null;
-
-    d3.json(this.site_samples_path(), this.draw);
   },
 
-  draw: function(samples) {
+  /**
+   * build the path to the site_samples based on optional before/after constraints
+   */
+  url: function(){
+
+    var base_path = '/sites/';
+    var path = base_path + this.site_id + "/" + "samples.json";
+
+    path += "?"
+    if (this.sampled_after != null) 
+      path += "sampled_after=" + JSON.stringify(this.sampled_after);
+    if (this.sampled_before != null) 
+      path += "&sampled_before=" + JSON.stringify(this.sampled_before);
+
+    return path;
+  }
+})
+
+var SensorPlot = Backbone.View.extend({
+
+  render: function() {
     "use strict";
+
+    var samples = this.collection.models;
 
     var margin = 60,
       width = 700 - margin,
@@ -31,12 +54,12 @@ var SensorPlot = Backbone.Model.extend({
       data(samples).
       enter().
       append("circle").
-        attr("class", function(sample) { return sample.value == 0 ? "zero" : "non-zero" });
+        attr("class", function(sample) { return sample.get('value') == 0 ? "zero" : "non-zero" });
 
-    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.value == 0 });
+    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.get('value') == 0 });
     var value_extent = d3.extent(
       non_zero_value_samples,
-      function(sample) { return sample.value; }
+      function(sample) { return sample.get('value'); }
     );
 
     var value_scale = d3.scale.linear().
@@ -52,10 +75,10 @@ var SensorPlot = Backbone.Model.extend({
       domain(time_extent).
       range([margin, width]);
 
-    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.value == 0 });
+    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.get('value') == 0 });
     var value_extent = d3.extent(
       non_zero_value_samples,
-      function(sample) { return sample.value; }
+      function(sample) { return sample.get('value'); }
     );
 
     var value_scale = d3.scale.linear().
@@ -64,7 +87,7 @@ var SensorPlot = Backbone.Model.extend({
 
     var time_extent = d3.extent(
       samples,
-      function(sample) { return Date.parse(sample.sampled_at); }
+      function(sample) { return Date.parse(sample.get('sampled_at')); }
     );
 
     var time_scale = d3.time.scale().
@@ -72,8 +95,8 @@ var SensorPlot = Backbone.Model.extend({
       range([margin, width]);
 
     d3.selectAll("circle").
-      attr("cx", function(sample) { return time_scale(Date.parse(sample.sampled_at)); }).
-      attr("cy", function(sample) { return sample.value == 0.0 ? height : value_scale(sample.value); }).
+      attr("cx", function(sample) { return time_scale(Date.parse(sample.get('sampled_at'))); }).
+      attr("cy", function(sample) { return sample.get('value') == 0.0 ? height : value_scale(sample.get('value')); }).
       attr("r", 3);
 
     var time_axis = d3.svg.axis().
@@ -95,25 +118,7 @@ var SensorPlot = Backbone.Model.extend({
       attr("transform", "translate(" + margin + ")").
       call(value_axis);
 
-  },
-
-  /**
-   * build the path to the site_samples based on optional before/after constraints
-   */
-  site_samples_path: function() {
-    var base_path = '/sites/';
-    var path = base_path + this.site_id + "/" + "samples.json";
-
-    if (this.sampled_after != null) {
-      path += "?sampled_after=" + JSON.stringify(this.sampled_after);
-      if (this.sampled_before != null) {
-        path += "&sampled_before=" + JSON.stringify(this.sampled_before);
-      }
-    } else {
-      if (this.sampled_before != null) {
-        path += "?sampled_before=" + JSON.stringify(this.sampled_before);
-      }
-    }
-    return path;
   }
+
 });
+

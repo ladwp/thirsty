@@ -1,6 +1,15 @@
 <script type="text/javascript">
-  var sensor_plot = new SensorPlot(<%= @site.id %>);
+
+  var site = new SensorSite({site_id:<%= @site.id %>});
+  site.plot_view = sensor_plot = new SensorPlot({collection:site});
+
+  $.when(site.fetch()).done(function(){
+       site.plot_view.render() 
+  })
+
 </script>
+
+
 <style type="text/css">
   svg {
     padding-bottom: 50px;
