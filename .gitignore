@@ -13,3 +13,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# created by jasmine-headless-webkit for cli jasmine tests
+.jhw-cache

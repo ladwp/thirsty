@@ -25,56 +25,114 @@
 </p>
 
 <h2>Api</h2>
+
+<h3 id="sensor-sites">Sensor Sites</h3>
+
+<p>
+  Each sensor represents a particular physical location where
+  <a href="#sensor-samples">samples</a> of a particular metric  
+  (e.g. flow rate or elevation) are taken.
+</p>
 <div class="method">
   <strong>GET /sites.json</strong>
   <pre>curl -X GET api.thirsty.la/sites.json</pre>
-  <p>Get list of available sites</p>
+  <p>Get list of available sites.</p>
   <pre class="prettyprint"><code>[
-    {
-        "created_at": "2012-08-13T14:09:41-07:00", 
-        "id": 490, 
-        "measurement_type": "Flow", 
-        "site_name": "LAA at Alabama", 
-        "updated_at": "2012-08-13T14:09:41-07:00"
-    }, 
-    {
-        "created_at": "2012-08-13T14:09:42-07:00", 
-        "id": 4922, 
-        "measurement_type": "Level", 
-        "site_name": "LAA at Alabama", 
-        "updated_at": "2012-08-13T14:09:42-07:00"
-    },
-    ...
+   {
+      "created_at" : "2012-08-13T18:03:00-07:00",
+      "updated_at" : "2012-08-13T18:03:00-07:00",
+      "last_sampled_at" : "2012-08-13T16:58:55-07:00",
+      "measurement_type" : "Elevation",
+      "id" : 511525,
+      "site_name" : "Mono Lk."
+   },
+   {
+      "created_at" : "2012-08-13T18:03:01-07:00",
+      "updated_at" : "2012-08-13T18:03:01-07:00",
+      "last_sampled_at" : "2012-08-13T16:58:56-07:00",
+      "measurement_type" : "Elevation",
+      "id" : 901125,
+      "site_name" : "Fairmont Reservoir"
+   },
+   ...
 ]</code></pre>
 </div>
 
 <div class="method">
   <strong>GET /sites/&lt;id&gt;.json</strong>
   <pre>curl -X GET api.thirsty.la/sites/490.json</pre>
-  <p>Get the list of samples for the given site</p>
+  <p>Get an individual site.</p>
   <pre class="prettyprint"><code>{
-    "created_at": "2012-08-13T14:09:41-07:00", 
-    "id": 490, 
-    "measurement_type": "Flow", 
-    "samples": [
-        {
-            "created_at": "2012-08-13T14:09:41-07:00", 
-            "id": 121, 
-            "sampled_at": "2012-08-13T06:44:16-07:00", 
-            "site_id": 490, 
-            "updated_at": "2012-08-13T14:09:41-07:00", 
-            "value": 478.0
-        }, 
-        {
-            "created_at": "2012-08-13T14:09:41-07:00", 
-            "id": 122, 
-            "sampled_at": "2012-08-13T06:29:15-07:00", 
-            "site_id": 490, 
-            "updated_at": "2012-08-13T14:09:41-07:00", 
-            "value": 478.0
-        }, 
-        ...
-    ]
+   "created_at" : "2012-08-13T18:01:42-07:00",
+   "updated_at" : "2012-08-13T18:01:42-07:00",
+   "last_sampled_at" : "2012-08-13T16:58:56-07:00",
+   "measurement_type" : "Flow",
+   "id" : 490,
+   "site_name" : "LAA at Alabama"
 }</code></pre>
 </div>
 
+<h3 id="sensor-samples">Sensor Samples</h3>
+
+<p>
+  A sample is a measurement taken at a particular time from a particular 
+  <a href="#sensor-sites">Sensor Site</a>.
+</p>
+<div class="method">
+  <strong>GET /sites/&lt;id&gt;/samples.json</strong>
+  <pre>curl -X GET api.thirsty.la/sites/490/samples.json</pre>
+  <p>Get the samples for an individual site.</p>
+  <pre class="prettyprint"><code>[
+   {
+      "created_at" : "2012-08-13T18:01:42-07:00",
+      "value" : 480,
+      "updated_at" : "2012-08-13T18:01:42-07:00",
+      "site_id" : 490,
+      "id" : 121,
+      "sampled_at" : "2012-08-13T16:58:56-07:00"
+   },
+   {
+      "created_at" : "2012-08-13T18:01:42-07:00",
+      "value" : 478,
+      "updated_at" : "2012-08-13T18:01:42-07:00",
+      "site_id" : 490,
+      "id" : 122,
+      "sampled_at" : "2012-08-13T16:44:15-07:00"
+   },
+   ...
+]</code></pre>
+
+<p>
+  You can filter samples by date using the <strong>sampled_before</strong> 
+  and/or <strong>sampled_after</strong> parameters. The parameter should be
+  formatted as a JSON serialized date.
+</p>
+<div class="method">
+  <strong>GET /sites/&lt;id&gt;/samples.json?sampled_after=&lt;date&gt;&amp;sampled_before=&lt;date&gt;</strong>
+  <pre>curl -X GET api.thirsty.la/sites/490/samples.json?sampled_after=%222012-07-15T06%3A42%3A37.573Z%22</pre>
+  <p>Get all samples for site 490 after July 15, 2012.</p>
+  <pre class="prettyprint"><code>[
+   {
+      "created_at" : "2012-08-13T18:01:42-07:00",
+      "value" : 480,
+      "updated_at" : "2012-08-13T18:01:42-07:00",
+      "site_id" : 490,
+      "id" : 121,
+      "sampled_at" : "2012-07-16T16:58:56-07:00"
+   },
+   {
+      "created_at" : "2012-08-13T18:01:42-07:00",
+      "value" : 478,
+      "updated_at" : "2012-08-13T18:01:42-07:00",
+      "site_id" : 490,
+      "id" : 122,
+      "sampled_at" : "2012-07-16T16:44:15-07:00"
+   },
+   ...
+]</code></pre>
+<pre clas="prettyprint"><code>/* One way to get a date in the appropriate format, using Javascript */
+var sampled_after_date = new Date(2012, 06, 15);
+var sampled_after_date_param = encodeURI(
+                                  JSON.stringify(
+                                    sampled_after_date));</code></pre>
+</div>

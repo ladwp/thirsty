@@ -8,10 +8,10 @@ class SitesController < ApplicationController
   end
 
   def show
-    @site = Site.find(params[:id])
+    @site = Site.with_last_sampled_at.find(params[:id])
     respond_to do |format|
       format.html
-      format.json { render :json => @site.as_json(:include => :samples) }
+      format.json { render :json => @site }
     end
   end
 end
