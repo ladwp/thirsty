@@ -1,14 +1,13 @@
 <script type="text/javascript">
+$(function() {
+  var sensor_site = new SensorSite({id: <%= @site.id %>});
+  var sensor_plot = new SensorPlot({model: sensor_site, el:$('.plot')});
 
-  var site = new SensorSite({site_id:<%= @site.id %>});
-  site.plot_view = sensor_plot = new SensorPlot({collection:site});
-
-  $.when(site.fetch()).done(function(){
-       site.plot_view.render() 
-  })
-
+  $.when(sensor_site.sensor_samples.fetch()).done(function(){
+    sensor_plot.render();
+  });
+});
 </script>
-
 
 <style type="text/css">
   svg {

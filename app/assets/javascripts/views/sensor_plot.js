@@ -3,15 +3,15 @@ var SensorPlot = Backbone.View.extend({
   render: function() {
     "use strict";
 
-    var samples = this.collection.models;
+    var samples = this.model.sensor_samples.models;
 
     var margin = 60,
       width = 700 - margin,
       height = 500 - margin;
 
-    $('.plot').empty();
+    this.$el.empty();
 
-    d3.select(".plot").
+    d3.select(this.el).
       append("svg").
         attr("width", width).
         attr("height", height).
@@ -37,7 +37,7 @@ var SensorPlot = Backbone.View.extend({
 
     var time_extent = d3.extent(
       samples,
-      function(sample) { return Date.parse(sample.sampled_at); }
+      function(sample) { return Date.parse(sample.get('sampled_at')); }
     );
 
     var time_scale = d3.time.scale().
@@ -86,6 +86,8 @@ var SensorPlot = Backbone.View.extend({
       attr("class", "y axis").
       attr("transform", "translate(" + margin + ")").
       call(value_axis);
+
+    return this.el;
 
   }
 
