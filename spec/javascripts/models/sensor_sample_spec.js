@@ -23,9 +23,9 @@ describe("SensorSamples", function() {
 
         expect(sensor_samples.url()).toEqual("/sites/5/samples.json");
       });
-    describe("when just 'sampled_after' is set", function() {
     });
 
+    describe("when just 'sampled_after' is set", function() {
       it("should just add sampled_after param", function() {
         sensor_samples.sampled_after = new Date(12345);
         sensor_samples.sampled_before = null;
