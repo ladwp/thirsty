@@ -33,9 +33,9 @@ end
 
 group :test, :development do
   gem 'jasmine-rails'
+  gem 'pry'
 end
 
-gem 'debugger'
 
 
 
