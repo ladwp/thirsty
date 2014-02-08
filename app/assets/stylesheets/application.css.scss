@@ -27,6 +27,12 @@ table td {
   width: 700px;
 }
 
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 700px;
+}
+
 #main {
   min-height: 400px;
 }
@@ -41,20 +47,20 @@ footer {
   float: right;
   font-size: 14px;
   line-height: 24px;
-}
 
-#calling-card .jackpine-logo {
-  float: right;
-  margin-right: 17px;
-  width: 44px;
-  height: 34px;
-}
+  .jackpine-logo {
+    float: right;
+    margin-right: 17px;
+    width: 44px;
+    height: 34px;
+  }
 
-#calling-card .brand {
-  margin-top: 7px;
-}
+  .brand {
+    margin-top: 7px;
+  }
 
-#calling-card .contact {
-  clear: right;
+  .contact {
+    clear: right;
+  }
 }
 
