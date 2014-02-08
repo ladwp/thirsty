@@ -9,7 +9,7 @@ module AquaductCrawler
   # 8/12/12 11:44:16 PM	 5.0
   # 8/12/12 10:44:16 PM	 5.0
   # 8/12/12 9:44:16 PM	 5.0
-  class SampleParse
+  class SampleParser
     attr :sampled_at, :value
     def initialize(sample_row)
       # datetimes like "08/31/12 12:28:52 PM"

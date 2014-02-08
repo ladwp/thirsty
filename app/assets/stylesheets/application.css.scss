@@ -11,3 +11,50 @@
  *= require_self
  *= require_tree .
  */
+
+@import "bootstrap";
+
+body {
+  padding-top: 60px;
+}
+
+table td {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.container {
+  width: 700px;
+}
+
+#main {
+  min-height: 400px;
+}
+
+footer {
+  border-top: solid #f0f0f0 1px;
+  height: 100px;
+  padding-top: 5px;
+}
+
+#calling-card {
+  float: right;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+#calling-card .jackpine-logo {
+  float: right;
+  margin-right: 17px;
+  width: 44px;
+  height: 34px;
+}
+
+#calling-card .brand {
+  margin-top: 7px;
+}
+
+#calling-card .contact {
+  clear: right;
+}
+

@@ -1,7 +1,7 @@
 require 'aquaduct_crawler'
 
 module AquaductCrawler
-  class SiteParse
+  class SiteParser
     attr :body, :id, :site_name, :measurement_type
 
     def initialize(filename)
@@ -23,7 +23,7 @@ module AquaductCrawler
 
     def sample_parses
       @body.at('table').children[3..-1].map do |sample_row|
-        SampleParse.new(sample_row)
+        SampleParser.new(sample_row)
       end
     end
 

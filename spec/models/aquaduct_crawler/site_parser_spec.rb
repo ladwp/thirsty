@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 module AquaductCrawler
-  describe SiteParse do
-    let(:site_parse) { AquaductCrawler::SiteParse.new("fake_station_id.html") }
+  describe SiteParser do
+    let(:site_parse) { AquaductCrawler::SiteParser.new("fake_station_id.html") }
     before do
       stub_request(:get, "http://wsoweb.ladwp.com/Aqueduct/realtime/fake_station_id.html").
         with(:headers => {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).

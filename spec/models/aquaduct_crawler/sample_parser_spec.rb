@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 module AquaductCrawler
-  describe SampleParse do
+  describe SampleParser do
     let(:sample_row_html) { File.read('spec/fixtures/sample_row.html') }
     let(:sample_row) { Nokogiri::HTML::DocumentFragment.parse(sample_row_html).children[0] }
-    let(:sample_parse) { SampleParse.new(sample_row) }
+    let(:sample_parse) { SampleParser.new(sample_row) }
 
     describe "#initialize" do
       subject { sample_parse }
