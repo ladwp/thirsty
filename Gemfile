@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.16'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,8 +13,8 @@ gem 'newrelic_rpm'
 # in production environments by default.
 group :assets do
   gem 'sass-rails'
+  gem 'bootstrap-sass'
   gem 'coffee-rails'
-  gem 'twitter-bootstrap-rails'
   gem 'jquery-rails'
   gem 'underscore-rails'
   gem 'backbone-rails'
@@ -27,7 +27,6 @@ group :test do
   gem 'webmock'
   gem 'spork'
   gem 'guard-rspec'
-  gem 'rb-inotify'
   gem 'factory_girl_rails'
 end
 
