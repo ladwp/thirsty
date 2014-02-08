@@ -12,7 +12,7 @@ module AquaductCrawler
 
   def self.site_parses
     @site_parses ||= sites_to_crawl.map do |site_file_name|
-      SiteParse.new(site_file_name)
+      SiteParser.new(site_file_name)
     end
   end
 
