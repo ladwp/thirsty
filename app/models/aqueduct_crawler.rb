@@ -2,7 +2,7 @@ require 'net/http'
 require 'nokogiri'
 require 'logger'
 
-module AquaductCrawler
+module AqueductCrawler
 
   HOST='wsoweb.ladwp.com'
   BASE_PATH='/Aqueduct/realtime/'

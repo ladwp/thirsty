@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module AquaductCrawler
+module AqueductCrawler
   describe SampleParser do
     let(:sample_row_html) { File.read('spec/fixtures/sample_row.html') }
     let(:sample_row) { Nokogiri::HTML::DocumentFragment.parse(sample_row_html).children[0] }

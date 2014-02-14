@@ -1,4 +1,4 @@
-Aquaduct::Application.routes.draw do
+Aqueduct::Application.routes.draw do
 
   get 'sites(.:format)' => 'sites#index', :as => 'sites'
   get 'sites/:id(.:format)' => 'sites#show', :as => 'site'

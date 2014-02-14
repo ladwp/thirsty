@@ -1,4 +1,4 @@
-module AquaductCrawler
+module AqueductCrawler
   # ladwp stores last 5 days of sample data
   # Today's samples are stored in 15 minute increments,
   # the previous four days are stored in one hour increments

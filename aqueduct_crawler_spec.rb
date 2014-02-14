@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module AquaductCrawler
+module AqueductCrawler
   describe ".update_samples" do
     let(:site_id) { "001" }
     before do
@@ -17,7 +17,7 @@ module AquaductCrawler
       Sample.count.should == 0
       Site.count.should == 0
 
-      AquaductCrawler.update_samples
+      AqueductCrawler.update_samples
 
       Sample.count.should == 5
       Site.count.should == 1
@@ -29,7 +29,7 @@ module AquaductCrawler
         FactoryGirl.create(:sample, :sampled_at => Time.parse("Aug 6, 2012 7:44:24 PM PDT"), :value => 0.0, :site => site)
         Sample.count.should == 1
 
-        AquaductCrawler.update_samples
+        AqueductCrawler.update_samples
 
         Sample.count.should == 5
       end

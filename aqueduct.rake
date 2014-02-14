@@ -1,9 +1,9 @@
-namespace "aquaduct" do
+namespace "aqueduct" do
   desc "crawl for new samples"
   task :crawl => [:environment] do
     pre_time = Time.now
     pre_count = Sample.count
-    AquaductCrawler.update_samples
+    AqueductCrawler.update_samples
     post_time = Time.now
     post_count = Sample.count
     site_count = Site.count

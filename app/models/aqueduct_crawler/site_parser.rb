@@ -1,6 +1,6 @@
-require 'aquaduct_crawler'
+require 'aqueduct_crawler'
 
-module AquaductCrawler
+module AqueductCrawler
   class SiteParser
     attr :body, :id, :site_name, :measurement_type
 
@@ -11,7 +11,7 @@ module AquaductCrawler
       @id, _ = filename.split(".")
       @measurement_type = MEASUREMENT_TYPES.detect { |measurement_type| header.include?(measurement_type) }
       if @measurement_type.nil?
-        AquaductCrawler.logger.warn("Unknown measurement_type for #{header} (#{filename}), assuming 'Flow'")
+        AqueductCrawler.logger.warn("Unknown measurement_type for #{header} (#{filename}), assuming 'Flow'")
         @measurement_type = FLOW
       end
       @site_name = header.gsub(/ #{@measurement_type}$/,'')

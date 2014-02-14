@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Aquaduct::Application.load_tasks
+Aqueduct::Application.load_tasks
