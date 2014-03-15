@@ -3,6 +3,9 @@ $(function() {
   var sensor_site = new SensorSite({id: <%= @site.id %>});
   var sensor_plot = new SensorPlot({model: sensor_site, el:$('.plot')});
 
+  var spinner = new Spinner().spin();
+  $('.plot').append(spinner.el);
+
   $.when(sensor_site.sensor_samples.fetch()).done(function(){
     sensor_plot.render();
   });
@@ -29,6 +32,10 @@ $(function() {
   }
   circle.zero {
     fill: Red;
+  }
+  .plot .spinner {
+    margin-top: 100px;
+    margin-left: 200px;
   }
 </style>
 <h2><%= @site.site_name %> : <%= @site.measurement_type %></h2>
