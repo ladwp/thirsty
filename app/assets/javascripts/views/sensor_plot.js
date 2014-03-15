@@ -53,25 +53,6 @@ var SensorPlot = Backbone.View.extend({
       domain(time_extent).
       range([margin, width]);
 
-    var non_zero_value_samples =  _.reject(samples, function(sample) { return sample.get('value') == 0 });
-    var value_extent = d3.extent(
-      non_zero_value_samples,
-      function(sample) { return sample.get('value'); }
-    );
-
-    var value_scale = d3.scale.linear().
-      domain(value_extent).
-      range([height, margin]);
-
-    var time_extent = d3.extent(
-      samples,
-      function(sample) { return Date.parse(sample.get('sampled_at')); }
-    );
-
-    var time_scale = d3.time.scale().
-      domain(time_extent).
-      range([margin, width]);
-
     d3.selectAll("circle").
       attr("cx", function(sample) { return time_scale(Date.parse(sample.get('sampled_at'))); }).
       attr("cy", function(sample) { return sample.get('value') == 0.0 ? height : value_scale(sample.get('value')); }).
@@ -105,14 +86,12 @@ var SensorPlot = Backbone.View.extend({
   },
 
   update_filters: function() {
-    console.log("date changed");
     var view = this;
 
     this.model.sensor_samples.sampled_before = this.sampled_before();
     this.model.sensor_samples.sampled_after = this.sampled_after();
 
     var samples = this.model.sensor_samples.fetch().then(function(){
-      console.log('fetched!');
       view.render();
     });
   },
