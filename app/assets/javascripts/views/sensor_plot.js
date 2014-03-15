@@ -16,7 +16,9 @@ var SensorPlot = Backbone.View.extend({
       height = 500 - margin;
 
     var controls_template = _.template("<div>Samples collected from <input name='site_samples_sampled_after' class='datepicker' value='<%= sampled_after %>'> to <input name='site_samples_sampled_before' class='datepicker' value='<%= sampled_before %>'></div>");
-    var controls_html = controls_template({ sampled_after: this.display_date(this.model.sensor_samples.sampled_after), sampled_before: this.display_date(this.model.sensor_samples.sampled_before) });
+    var sampled_after = this.model.sensor_samples.sampled_after
+    var sampled_before = this.model.sensor_samples.sampled_before
+    var controls_html = controls_template({ sampled_after: this.display_date(sampled_after), sampled_before: this.display_date(sampled_before) });
     this.$el.append(controls_html);
     $('.datepicker', this.$el).datepicker();
 
@@ -45,8 +47,7 @@ var SensorPlot = Backbone.View.extend({
       range([height, margin]);
 
     var time_extent = d3.extent(
-      samples,
-      function(sample) { return Date.parse(sample.get('sampled_at')); }
+      [sampled_after, sampled_before]
     );
 
     var time_scale = d3.time.scale().
