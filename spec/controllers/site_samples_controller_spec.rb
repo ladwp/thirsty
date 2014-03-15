@@ -27,18 +27,18 @@ describe SiteSamplesController do
       it "should filter samples by 'before' date" do
         mock_site.samples.should_receive(:where).with("sampled_at < ?", Date.parse("December 1, 2012"))
 
-        get :index, :site_id => '1', :format => :json, :sampled_before => Date.parse("December 1, 2012")
+        get :index, :site_id => '1', :format => :json, :sampled_before => Date.parse("December 1, 2012").to_json
       end
       it "should filter samples by 'after' date" do
         mock_site.samples.should_receive(:where).with("sampled_at > ?", Date.parse("December 1, 2012"))
 
-        get :index, :site_id => '1', :format => :json, :sampled_after => Date.parse("December 1, 2012")
+        get :index, :site_id => '1', :format => :json, :sampled_after => Date.parse("December 1, 2012").to_json
       end
       it "should filter samples by 'before' and 'after' dates" do
         mock_site.samples.should_receive(:where).with("sampled_at > ?", Date.parse("June 1, 2012")).and_return(samples_query)
         samples_query.should_receive(:where).with("sampled_at < ?", Date.parse("December 1, 2012"))
 
-        get :index, :site_id => '1', :format => :json, :sampled_before => Date.parse("December 1, 2012"), :sampled_after => Date.parse("June 1, 2012")
+        get :index, :site_id => '1', :format => :json, :sampled_before => Date.parse("December 1, 2012").to_json, :sampled_after => Date.parse("June 1, 2012").to_json
       end
     end
   end
