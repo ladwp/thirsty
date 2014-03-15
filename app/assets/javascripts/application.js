@@ -18,5 +18,6 @@
 //= require d3
 //= require moment
 //= require bootstrap-datepicker
+//= require spin
 //= require_tree .
 
