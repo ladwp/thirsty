@@ -18,6 +18,7 @@ group :assets do
   gem 'jquery-rails'
   gem 'underscore-rails'
   gem 'backbone-rails'
+  gem 'momentjs-rails'
   gem 'd3-rails'
   gem 'uglifier'
 end
