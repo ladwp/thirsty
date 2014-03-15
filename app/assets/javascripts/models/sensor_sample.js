@@ -26,12 +26,8 @@ var SensorSamples = Backbone.Collection.extend({
     var site_samples_path = this.sensor_site.url() + "/samples.json";
 
     date_filters = {}
-    if (this.sampled_after != null) {
-      date_filters.sampled_after = JSON.stringify(this.sampled_after);
-    }
-    if (this.sampled_before != null) {
-      date_filters.sampled_before = JSON.stringify(this.sampled_before);
-    }
+    date_filters.sampled_after = JSON.stringify(this.sampled_after);
+    date_filters.sampled_before = JSON.stringify(this.sampled_before);
     
     if ($.isEmptyObject(date_filters)) {
       return site_samples_path

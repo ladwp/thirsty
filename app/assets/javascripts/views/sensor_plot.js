@@ -15,7 +15,7 @@ var SensorPlot = Backbone.View.extend({
       width = 700 - margin,
       height = 500 - margin;
 
-    var controls_template = _.template("<div>Samples collected from <input name='site_samples_sampled_before' class='datepicker' value='<%= sampled_after %>'> to <input name='site_samples_sampled_after' class='datepicker' value='<%= sampled_before %>'>.</div>");
+    var controls_template = _.template("<div>Samples collected from <input name='site_samples_sampled_after' class='datepicker' value='<%= sampled_after %>'> to <input name='site_samples_sampled_before' class='datepicker' value='<%= sampled_before %>'>.</div>");
     var controls_html = controls_template({ sampled_after: this.display_date(this.model.sensor_samples.sampled_after), sampled_before: this.display_date(this.model.sensor_samples.sampled_before) });
     this.$el.append(controls_html);
     $('.datepicker', this.$el).datepicker();
@@ -98,6 +98,31 @@ var SensorPlot = Backbone.View.extend({
 
     return this.el;
 
+  },
+
+  events: {
+    "changeDate .datepicker": "update_filters"
+  },
+
+  update_filters: function() {
+    console.log("date changed");
+    var view = this;
+
+    this.model.sensor_samples.sampled_before = this.sampled_before();
+    this.model.sensor_samples.sampled_after = this.sampled_after();
+
+    var samples = this.model.sensor_samples.fetch().then(function(){
+      console.log('fetched!');
+      view.render();
+    });
+  },
+
+  sampled_before: function() {
+    return moment($('[name=site_samples_sampled_before]', this.$el).val());
+  },
+
+  sampled_after: function() {
+    return moment($('[name=site_samples_sampled_after]', this.$el).val());
   }
 
 });
