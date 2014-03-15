@@ -15,7 +15,7 @@ var SensorPlot = Backbone.View.extend({
       width = 700 - margin,
       height = 500 - margin;
 
-    var controls_template = _.template("<div>Samples collected from <input name='site_samples_sampled_after' class='datepicker' value='<%= sampled_after %>'> to <input name='site_samples_sampled_before' class='datepicker' value='<%= sampled_before %>'></div>");
+    var controls_template = _.template("<div class='controls'>Samples collected from <input name='site_samples_sampled_after' class='datepicker' value='<%= sampled_after %>'> to <input name='site_samples_sampled_before' class='datepicker' value='<%= sampled_before %>'></div>");
     var sampled_after = this.model.sensor_samples.sampled_after
     var sampled_before = this.model.sensor_samples.sampled_before
     var controls_html = controls_template({ sampled_after: this.display_date(sampled_after), sampled_before: this.display_date(sampled_before) });
@@ -88,6 +88,9 @@ var SensorPlot = Backbone.View.extend({
 
   update_filters: function() {
     var view = this;
+
+    var spinner = new Spinner().spin();
+    $('.controls', this.$el).append(spinner.el);
 
     this.model.sensor_samples.sampled_before = this.sampled_before();
     this.model.sensor_samples.sampled_after = this.sampled_after();
