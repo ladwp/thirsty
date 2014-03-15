@@ -16,4 +16,7 @@
 //= require backbone
 //= require bootstrap
 //= require d3
+//= require moment
+//= require bootstrap-datepicker
 //= require_tree .
+

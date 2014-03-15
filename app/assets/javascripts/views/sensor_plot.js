@@ -1,15 +1,24 @@
 var SensorPlot = Backbone.View.extend({
 
+  display_date: function(date) {
+    return date.format("MM/DD/YYYY");
+  },
+
   render: function() {
     "use strict";
 
     var samples = this.model.sensor_samples.models;
 
+    this.$el.empty();
+
     var margin = 60,
       width = 700 - margin,
       height = 500 - margin;
 
-    this.$el.empty();
+    var controls_template = _.template("<div>Samples collected from <input name='site_samples_sampled_before' class='datepicker' value='<%= sampled_after %>'> to <input name='site_samples_sampled_after' class='datepicker' value='<%= sampled_before %>'>.</div>");
+    var controls_html = controls_template({ sampled_after: this.display_date(this.model.sensor_samples.sampled_after), sampled_before: this.display_date(this.model.sensor_samples.sampled_before) });
+    this.$el.append(controls_html);
+    $('.datepicker', this.$el).datepicker();
 
     d3.select(this.el).
       append("svg").
