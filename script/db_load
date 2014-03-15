@@ -1,0 +1,16 @@
+#!/bin/sh
+# overwrites local DB with recent dump of remote
+# usage: script/db_pull wlc2013
+# defaults to staging
+
+set -e
+
+APP=${1:-thirstyla}
+DATABASE_NAME=aqueduct_development
+DUMP_NAME=tmp/$APP.dump
+
+echo dumping latest $APP db into local $DATABASE_NAME
+
+dropdb $DATABASE_NAME -h localhost && createdb $DATABASE_NAME -h localhost
+pg_restore -d $DATABASE_NAME --no-owner $DUMP_NAME -v -h localhost
+
