@@ -7,8 +7,8 @@ var SensorSamples = Backbone.Collection.extend({
     this.sensor_site = opts.sensor_site;
 
 
-    //Default includes samples from the last three months
-    this.sampled_after = moment().subtract(3, "months");
+    //Default includes samples from the last month
+    this.sampled_after = moment().subtract(1, "month");
     this.sampled_before = moment()
   },
 
