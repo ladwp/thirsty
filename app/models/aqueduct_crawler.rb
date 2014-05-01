@@ -30,6 +30,11 @@ module AqueductCrawler
   end
 
   def self.update_samples
+    current_site_samples = {}
+    bad_sites = []
+    Site.all.each do |site|
+      current_site_samples[site.id] = [site.samples.count, 0]
+    end
     site_parses.each do |site_parse|
       logger.debug("parsing site id: #{site_parse.id}")
       site = Site.find_or_create_by_id(site_parse.to_hash)
@@ -39,6 +44,17 @@ module AqueductCrawler
       end.each do |sample|
         Sample.find_or_create_by_sampled_at_and_site_id(sample.attributes)
       end
+      if current_site_samples.has_key?(site.id)
+        current_site_samples[site.id][1] = site.samples.count
+      end
+    end
+    current_site_samples.each do |site_id, curr_site|
+       if curr_site[0] == curr_site[1]
+         bad_sites << Site.find(site_id)
+       end
+    end
+    unless bad_sites.empty?
+      SiteErrorReporter.crawler_error(bad_sites).deliver
     end
   end
 
