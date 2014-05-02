@@ -18,6 +18,10 @@ class Site < ActiveRecord::Base
     Time.zone.parse(read_attribute(:last_sampled_at) + " UTC") unless read_attribute(:last_sampled_at).nil?
   end
 
+  def last_sample
+    samples.order(:sampled_at).last
+  end
+
 end
 
 
