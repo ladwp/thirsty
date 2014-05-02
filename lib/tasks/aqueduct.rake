@@ -3,21 +3,7 @@ namespace "aqueduct" do
   task :crawl => [:environment] do
     pre_time = Time.now
     pre_count = Sample.count
-    current_site_samples = {}
-    bad_sites = []
-    Site.all.each do |site|
-      current_site_samples[site.id] = site.samples.count
-    end
-    AqueductCrawler.update_samples
-    current_site_samples.each do |site_id, initial_count|
-      site = Site.find(site_id)
-      if initial_count == site.samples.count
-        bad_sites << site
-      end
-    end
-    unless bad_sites.empty?
-      SiteErrorReporter.crawler_error(bad_sites).deliver
-    end
+    AqueductCrawler.update_samples_with_notification
     post_time = Time.now
     post_count = Sample.count
     site_count = Site.count

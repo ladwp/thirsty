@@ -34,5 +34,11 @@ module AqueductCrawler
         Sample.count.should == 5
       end
     end
+
+    context "when some sites have missing samples" do
+      it "should send an email" do
+
+      end
+    end
   end
 end

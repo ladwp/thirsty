@@ -84,5 +84,24 @@ module AqueductCrawler
   SITE_TO_MEASUREMENT_MAP = {
     "00760" => FLOW,
   }
+
+  def self.update_samples_with_notification
+    current_site_samples = {}
+    bad_sites = []
+    Site.all.each do |site|
+      current_site_samples[site.id] = site.samples.count
+    end
+    update_samples
+    current_site_samples.each do |site_id, initial_count|
+      site = Site.find(site_id)
+      if initial_count == site.samples.count
+        bad_sites << site
+      end
+    end
+    unless bad_sites.empty?
+      SiteErrorReporter.crawler_error(bad_sites).deliver
+    end
+
+  end
 end
 
