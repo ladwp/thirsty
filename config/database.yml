@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   database: aqueduct_development
-  password: password
+  username: mkirk
   host: localhost
   pool: 5
   timeout: 5000
@@ -14,7 +14,7 @@ development:
 test:
   adapter: postgresql
   database: aqueduct_test
-  password: password
+  username: mkirk
   host: localhost
   pool: 5
   timeout: 5000
