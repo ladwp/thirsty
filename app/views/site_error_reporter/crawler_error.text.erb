@@ -1,5 +1,5 @@
 Hey - the following <%= @bad_sites.count %> sites did not get any new samples:
 
 <% @bad_sites.each do |site| %>
-    <%= site.site_name %>, last sampled at <%= site.last_sample.created_at %>, measurement type: <%= site.measurement_type %>
+    <%= site.site_name %>, last sampled at <%= site.last_sample.sampled_at %>, measurement type: <%= site.measurement_type %>
 <% end %>

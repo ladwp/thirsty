@@ -19,7 +19,7 @@ class Site < ActiveRecord::Base
   end
 
   def last_sample
-    samples.order(:updated_at).last
+    samples.order(:sampled_at).last
   end
 
 end
