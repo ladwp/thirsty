@@ -35,9 +35,18 @@ module AqueductCrawler
       end
     end
 
-    context "when some sites have missing samples" do
+    context "when there are no new samples" do
+      before do
+        AqueductCrawler.update_samples
+      end
       it "should send an email" do
-
+        AqueductCrawler.update_samples_with_notification
+      end
+    end
+    context "when there are some new samples" do
+      it "should send an email" do
+        AqueductCrawler.update_samples_with_notification
+        expect { AqueductCrawler.update_samples_with_notification }.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
   end
