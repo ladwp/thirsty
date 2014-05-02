@@ -82,8 +82,7 @@
   <strong>GET /sites/&lt;id&gt;/samples.json</strong>
   <pre>curl -X GET api.thirsty.la/sites/490/samples.json</pre>
   <p>Get the samples for an individual site.</p>
-  <pre class="prettyprint"><code>[
-   {
+  <pre class="prettyprint"><code>{ "samples": [{
       "created_at" : "2012-08-13T18:01:42-07:00",
       "value" : 480,
       "updated_at" : "2012-08-13T18:01:42-07:00",
@@ -100,7 +99,10 @@
       "sampled_at" : "2012-08-13T16:44:15-07:00"
    },
    ...
-]</code></pre>
+  ],
+  "sampled_after": null,
+  "sampled_before": null
+}</code></pre>
 
 <p>
   You can filter samples by date using the <strong>sampled_before</strong> 
@@ -111,7 +113,7 @@
   <strong>GET /sites/&lt;id&gt;/samples.json?sampled_after=&lt;date&gt;&amp;sampled_before=&lt;date&gt;</strong>
   <pre>curl -X GET api.thirsty.la/sites/490/samples.json?sampled_after=%222012-07-15T06%3A42%3A37.573Z%22</pre>
   <p>Get all samples for site 490 after July 15, 2012.</p>
-  <pre class="prettyprint"><code>[
+  <pre class="prettyprint"><code>{ "samples": [
    {
       "created_at" : "2012-08-13T18:01:42-07:00",
       "value" : 480,
@@ -129,7 +131,10 @@
       "sampled_at" : "2012-07-16T16:44:15-07:00"
    },
    ...
-]</code></pre>
+  ],
+  "sampled_after": "2012-07-15",
+  "sampled_before":"2013-03-15"
+}</code></pre>
 <pre clas="prettyprint"><code>/* One way to get a date in the appropriate format, using Javascript */
 var sampled_after_date = new Date(2012, 06, 15);
 var sampled_after_date_param = encodeURI(
