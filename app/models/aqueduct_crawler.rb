@@ -14,7 +14,7 @@ module AqueductCrawler
   end
 
   def self.site_parses
-    @site_parses ||= sites_to_crawl.first(3).map do |site_file_name|
+    @site_parses ||= sites_to_crawl.map do |site_file_name|
       begin
         site_parse = SiteParser.new(site_file_name)
         logger.info("Succesfully parsed #{site_file_name}")
