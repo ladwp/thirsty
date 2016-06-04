@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813180306) do
+ActiveRecord::Schema.define(:version => 20160604210809) do
 
   create_table "samples", :force => true do |t|
     t.float    "value",      :null => false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120813180306) do
 
   add_index "samples", ["sampled_at", "site_id"], :name => "index_samples_on_sampled_at_and_site_id", :unique => true
   add_index "samples", ["sampled_at"], :name => "index_samples_on_sampled_at"
+  add_index "samples", ["site_id"], :name => "index_samples_on_site_id"
 
   create_table "sites", :force => true do |t|
     t.string   "site_name",        :null => false

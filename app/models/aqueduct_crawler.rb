@@ -10,18 +10,25 @@ module AqueductCrawler
     @logger ||= Logger.new(STDOUT)
   end
 
+  class ParseError < RuntimeError
+  end
+
   def self.site_parses
-    @site_parses ||= sites_to_crawl.map do |site_file_name|
-      SiteParser.new(site_file_name)
-    end
+    @site_parses ||= sites_to_crawl.first(3).map do |site_file_name|
+      begin
+        site_parse = SiteParser.new(site_file_name)
+        logger.info("Succesfully parsed #{site_file_name}")
+      rescue ParseError => e
+        logger.error("Failed to parse #{site_file_name} with error: #{e}")
+      end
+      site_parse
+    end.compact
   end
 
   def self.site_file_names
-    # get apache file listing
-    response = Net::HTTP.get(HOST, BASE_PATH)
-    body = Nokogiri::HTML(response)
-    #Find all files like 1237.htm, they represent sensor pages
-    body.search('pre a').select { |l| l.inner_text.match /^[0-9]+\.htm$/ }.map &:inner_text
+    Sample.select('distinct site_id').map { |site|
+      sprintf("%05d.htm", site.site_id)
+    }
   end
 
   #exclude sites with wonky data
@@ -38,6 +45,7 @@ module AqueductCrawler
         Sample.new(sample_attributes)
       end.each do |sample|
         Sample.find_or_create_by_sampled_at_and_site_id(sample.attributes)
+        logger.info("updated sample for site:#{sample.site_id}, sampled_at: #{sample.sampled_at}")
       end
     end
   end
