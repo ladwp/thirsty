@@ -18,13 +18,21 @@ module AqueductCrawler
     end
 
     def header
-      @body.at("div b").inner_text
+      header_el = @body.at("div b")
+      raise ParseError.new("Cannot find header") if header_el.nil?
+
+      header_el.inner_text
     end
 
     def sample_parses
       @body.at('table').children[3..-1].map do |sample_row|
-        SampleParser.new(sample_row)
-      end
+        begin
+          sample_parse = SampleParser.new(sample_row)
+        rescue ParseError => e
+          AqueductCrawler.logger.info("Failed to parse sample for site:#{id} with error: #{e}")
+        end
+        sample_parse
+      end.compact
     end
 
     def to_hash

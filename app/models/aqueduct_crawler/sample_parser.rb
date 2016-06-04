@@ -12,9 +12,22 @@ module AqueductCrawler
   class SampleParser
     attr :sampled_at, :value
     def initialize(sample_row)
-      # datetimes like "08/31/12 12:28:52 PM"
-      @sampled_at = Time.strptime(sample_row.children[0].inner_text.strip + " PDT", "%m/%d/%y %I:%M:%S %p %z")
-      @value = sample_row.children[1].inner_text.strip.to_f
+
+      sampled_at_el = sample_row.children[0]
+      raise ParseError.new("can't find sampled_at element") if sampled_at_el.nil?
+      sampled_at_text = sampled_at_el.inner_text.strip
+
+      begin
+        # datetimes like "08/31/12 12:28:52 PM"
+        @sampled_at = Time.strptime(sampled_at_text + " PDT", "%m/%d/%y %I:%M:%S %p %z")
+      rescue ArgumentError => e
+        raise ParseError.new("Failed to parse sampled_at_text: #{sampled_at_text} with error: #{e}")
+      end
+
+      value_el = sample_row.children[1]
+      raise ParseError.new("can't find value element") if value_el.nil?
+      @value = value_el.inner_text.strip.to_f
+
       @site_id = @site_id
     end
 
