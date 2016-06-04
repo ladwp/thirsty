@@ -33,6 +33,7 @@ end
 group :test, :development do
   gem 'jasmine-rails'
   gem 'pry'
+  gem 'pry-byebug'
   gem 'test-unit'
 end
 
