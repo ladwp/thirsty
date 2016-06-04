@@ -9,19 +9,18 @@ gem 'pg'
 gem 'nokogiri'
 gem 'newrelic_rpm'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails'
-  gem 'bootstrap-sass'
-  gem 'coffee-rails'
-  gem 'jquery-rails'
-  gem 'underscore-rails'
-  gem 'backbone-rails'
-  gem 'momentjs-rails'
-  gem 'd3-rails'
-  gem 'uglifier'
-end
+gem 'sass-rails'
+
+# Sass was exploding when using the newest version, so pegging it to the last
+# known working one.
+gem 'bootstrap-sass', '3.1.0.2'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'underscore-rails'
+gem 'backbone-rails'
+gem 'momentjs-rails'
+gem 'd3-rails'
+gem 'uglifier'
 
 group :test do
   gem 'rspec-rails'
@@ -34,6 +33,7 @@ end
 group :test, :development do
   gem 'jasmine-rails'
   gem 'pry'
+  gem 'test-unit'
 end
 
 
